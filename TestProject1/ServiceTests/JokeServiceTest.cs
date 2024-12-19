@@ -42,5 +42,46 @@ namespace TestProject1.ServiceTests
             // ASSERT
             result.Should().BeEquivalentTo(listOfJokes);
         }
+
+        [Test]
+        public void PostJoke_InvokesModelWithCorrectArgument()
+        {
+            //Arrange
+            Joke joke = new Joke() { Id = 4, IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
+            Joke anotherJoke = new Joke() { Id = 5, IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
+            _jokeRepositoryMock.Setup(repo => repo.AddJoke(joke)).Returns(joke);
+           
+            //Act
+
+            var result = new JokeService(new JokeRepository()).AddJoke(joke);
+
+
+            //Assert
+
+            _jokeRepositoryMock.Verify(repo => repo.AddJoke(anotherJoke), Times.Once());
+
+        }
+        [Test]
+        public void PostJoke_ReturnsNewJokeWithIdAdded()
+        {
+            //Arrange
+            Joke resultJoke = new Joke() { Id = 4, IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
+            Joke joke = new Joke() { IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
+
+
+            _jokeRepositoryMock.Setup(repo => repo.AddJoke(anotherJoke)).Returns(new Joke());
+
+
+            //Act
+            Joke result = _jokeService.AddJoke(anotherJoke);
+
+
+            //Assert
+            Console.WriteLine(result.Id);
+            result.Id.Should().BeGreaterThan(0);
+            //result.Id.Should().NotBeNullOrEmpty();
+            //_jokeRepositoryMock.Object.AddJoke(joke).Id);
+
+        }
     }
 }

@@ -47,5 +47,11 @@ namespace TestProject1.ControllerTests
             result.Should().BeEquivalentTo(listOfJokes);
             _IJokeServiceMock.Verify(service => service.GetAllJokes(), Times.Once);
         }
+
+        [Test]
+        public void PostJokeTest()
+        {
+
+        }
     }
 }

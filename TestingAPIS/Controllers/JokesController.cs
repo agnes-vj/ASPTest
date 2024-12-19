@@ -17,5 +17,10 @@ namespace TestingAPIS.Controllers
         {
             return _jokeService.GetAllJokes();
         }
+        [HttpPost]
+        public Joke PostJoke(Joke newJoke)
+        {
+            return null;
+        }
     }
 }
