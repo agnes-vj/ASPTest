@@ -47,43 +47,67 @@ namespace TestProject1.ServiceTests
         public void PostJoke_InvokesModelWithCorrectArgument()
         {
             //Arrange
-            Joke joke = new Joke() { Id = 4, IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
-            Joke anotherJoke = new Joke() { Id = 5, IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
-            //_jokeRepositoryMock.Setup(repo => repo.AddJoke(joke)).Returns(joke);
-            _jokeRepositoryMock.Setup(repo => repo.AddJoke(anotherJoke)).Returns(anotherJoke);
+            Joke inputJoke = new Joke
+            {
+                Id = 0, 
+                IsFunny = false,
+                Category = "Sea Animal",
+                PunchLine = "A fsh",
+                SetupLine = "What do you call a fish with no eyes?"
+            };
+            Joke updatedJoke = new Joke
+            {
+                Id = 42,
+                IsFunny = inputJoke.IsFunny,
+                Category = inputJoke.Category,
+                PunchLine = inputJoke.PunchLine,
+                SetupLine = inputJoke.SetupLine
+            };
+
+            _jokeRepositoryMock.Setup(repo => repo.AddJoke(inputJoke))
+                               .Returns(updatedJoke);
 
 
             //Act
 
-            //var result = new JokeService(new JokeRepository()).AddJoke(anotherJoke);
-            var result = _jokeRepositoryMock.Object.AddJoke(anotherJoke);
+            var result = _jokeService.AddJoke(inputJoke);
 
             //Assert
 
-            _jokeRepositoryMock.Verify(repo => repo.AddJoke(anotherJoke), Times.Once());
+            _jokeRepositoryMock.Verify(repo => repo.AddJoke(inputJoke), Times.Once());
 
         }
         [Test]
         public void PostJoke_ReturnsNewJokeWithIdAdded()
         {
             //Arrange
-            Joke resultJoke = new Joke() { Id = 4, IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
-            Joke joke = new Joke() { IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
+            Joke inputJoke = new Joke
+            {
+                IsFunny = false,
+                Category = "Sea Animal",
+                PunchLine = "A fsh",
+                SetupLine = "What do you call a fish with no eyes?"
+            };
+            Joke updatedJoke = new Joke
+            {
+                Id = 42,
+                IsFunny = inputJoke.IsFunny,
+                Category = inputJoke.Category,
+                PunchLine = inputJoke.PunchLine,
+                SetupLine = inputJoke.SetupLine
+            };
 
-
-            _jokeRepositoryMock.Setup(repo => repo.AddJoke(joke)).Returns(resultJoke);
+            _jokeRepositoryMock.Setup(repo => repo.AddJoke(inputJoke))
+                               .Returns(updatedJoke);
 
 
             //Act
-            Joke result = _jokeService.AddJoke(joke);
+
+            var result = _jokeService.AddJoke(inputJoke);
 
 
             //Assert
-            Console.WriteLine(result.Id);
-            result.Id.Should().BeGreaterThan(0);
-            //result.Id.Should().NotBeNullOrEmpty();
-            //_jokeRepositoryMock.Object.AddJoke(joke).Id);
-
+            result.Should().BeEquivalentTo(inputJoke, options => options.Excluding(j => j.Id));
         }
     }
 }

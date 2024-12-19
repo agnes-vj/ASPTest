@@ -10,6 +10,7 @@ namespace TestingAPIS.Models
             var jokes = JsonSerializer.Deserialize<List<Joke>>(jsonJokes);
             return jokes;
         }
+
         public Joke AddJoke(Joke newJoke)
         {
             var jsonJokes = File.ReadAllText("Resources\\Jokes.json");
