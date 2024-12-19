@@ -6,7 +6,12 @@ namespace TestingAPIS.Controllers
     [Route("[controller]")]
     public class JokesController : ControllerBase
     {
-        private readonly JokeService _jokeService = new JokeService();
+        private readonly IJokeService _jokeService;
+
+        public JokesController(IJokeService jokeService) 
+        {
+            _jokeService = jokeService;
+        }
         [HttpGet]
         public IEnumerable<Joke> Index()
         {

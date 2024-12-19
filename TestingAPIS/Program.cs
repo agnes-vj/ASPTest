@@ -9,6 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IJokeRepository, JokeRepository>();
+builder.Services.AddScoped<IJokeService, JokeService>();
 
 var app = builder.Build();
 

@@ -2,7 +2,7 @@
 
 namespace TestingAPIS.Models
 {
-    public class JokeRepository
+    public class JokeRepository : IJokeRepository
     {
         public IEnumerable<Joke> FindAllJokes()
         {
