@@ -49,12 +49,14 @@ namespace TestProject1.ServiceTests
             //Arrange
             Joke joke = new Joke() { Id = 4, IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
             Joke anotherJoke = new Joke() { Id = 5, IsFunny = false, Category = "Sea Animal", PunchLine = "A fsh", SetupLine = "What do you call a fish with no eyes?" };
-            _jokeRepositoryMock.Setup(repo => repo.AddJoke(joke)).Returns(joke);
-           
+            //_jokeRepositoryMock.Setup(repo => repo.AddJoke(joke)).Returns(joke);
+            _jokeRepositoryMock.Setup(repo => repo.AddJoke(anotherJoke)).Returns(anotherJoke);
+
+
             //Act
 
-            var result = new JokeService(new JokeRepository()).AddJoke(joke);
-
+            //var result = new JokeService(new JokeRepository()).AddJoke(anotherJoke);
+            var result = _jokeRepositoryMock.Object.AddJoke(anotherJoke);
 
             //Assert
 

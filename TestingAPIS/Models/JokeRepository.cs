@@ -17,7 +17,19 @@ namespace TestingAPIS.Models
             int newId = jokes.OrderByDescending(joke => joke.Id).FirstOrDefault().Id + 1;
             newJoke.Id = newId;
             jokes.Add(newJoke);
+            File.WriteAllText("Resources\\Jokes.json", JsonSerializer.Serialize<List<Joke>>(jokes));
             return newJoke;
+        }
+
+        public Joke GetJokeById(int id)
+        {
+            var jsonJokes = File.ReadAllText("Resources\\Jokes.json");
+            List<Joke> jokes = JsonSerializer.Deserialize<List<Joke>>(jsonJokes);
+
+            var result = jokes.FirstOrDefault(j => j.Id == id);
+
+
+            return result;
         }
     }
 }

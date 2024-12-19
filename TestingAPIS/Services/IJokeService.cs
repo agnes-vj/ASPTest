@@ -5,5 +5,7 @@ namespace TestingAPIS.Services
     {
         IEnumerable<Joke> GetAllJokes();
         Joke AddJoke(Joke joke);
+
+        Joke GetJokeById(int id);
     }
 }

@@ -17,5 +17,9 @@ namespace TestingAPIS.Services
         {
             return _jokeRepository.AddJoke(joke);
         }
+        public Joke GetJokeById(int id)
+        {
+            return _jokeRepository.GetJokeById(id);
+        }
     }
 }
